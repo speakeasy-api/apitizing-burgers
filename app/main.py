@@ -233,7 +233,7 @@ app = FastAPI(
     summary="A simple API to manage burgers and orders",
     description="This API is used to manage burgers and orders in a restaurant",
     version="0.1.0",
-    title="Apitizing Burger API",
+    title="APItizing Burgers API",
     openapi_tags=tags_metadata,
     generate_unique_id_function=custom_generate_unique_id_function,
 )

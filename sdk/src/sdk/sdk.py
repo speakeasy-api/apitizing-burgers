@@ -7,7 +7,7 @@ from .sdkconfiguration import SDKConfiguration
 from sdk import utils
 
 class SDK:
-    r"""Apitizing Burger API: A simple API to manage burgers and orders
+    r"""APItizing Burgers API: A simple API to manage burgers and orders
     This API is used to manage burgers and orders in a restaurant
     """
     burger: Burger

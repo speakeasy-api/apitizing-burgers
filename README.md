@@ -1,7 +1,6 @@
 # APItizing Burgers API: an example API to manage burgers and orders in a restaurant
 
-This example API demonstrates Speakeasy's recommended practices for generating clear
-OpenAPI specifications.
+This example API demonstrates Speakeasy's recommended practices for generating clear OpenAPI specifications.
 
 ## Install FastAPI
 
