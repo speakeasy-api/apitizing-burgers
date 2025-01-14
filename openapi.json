@@ -8,7 +8,7 @@
   },
   "servers": [
     {
-      "url": "http://127.0.0.1:8000/",
+      "url": "http://127.0.0.1:8000",
       "description": "Local server"
     }
   ],
@@ -37,6 +37,11 @@
             }
           }
         },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
         "x-speakeasy-retries": {
           "strategy": "backoff",
           "backoff": {
@@ -712,11 +717,7 @@
             ]
           },
           "status": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/OrderStatus"
-              }
-            ],
+            "$ref": "#/components/schemas/OrderStatus",
             "examples": [
               "CREATED",
               "PREPARING",
@@ -795,11 +796,7 @@
             ]
           },
           "status": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/OrderStatus"
-              }
-            ],
+            "$ref": "#/components/schemas/OrderStatus",
             "description": "Status of the order",
             "examples": [
               "CREATED",
@@ -870,6 +867,14 @@
           "type"
         ],
         "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "description": "API Key for the Burger listing API. API Key should be sent as a header, witht the value 'your-apitizing-api-key'",
+        "in": "header",
+        "name": "your-apitizing-api-key"
       }
     }
   },

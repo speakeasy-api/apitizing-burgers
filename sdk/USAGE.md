@@ -1,20 +1,36 @@
-<!-- Start SDK Example Usage -->
-
-
+<!-- Start SDK Example Usage [usage] -->
 ```python
-import sdk
-from sdk.models import shared
+# Synchronous Example
+from openapi import SDK
 
-s = sdk.SDK()
+with SDK(
+    api_key="<YOUR_API_KEY_HERE>",
+) as sdk:
 
-req = shared.BurgerCreate(
-    description='Veggie burger with avocado',
-    name='Hamburger',
-)
+    res = sdk.burger.create_burger(name="Cheeseburger", description="A classic cheeseburger")
 
-res = s.burger.create_burger(req)
-
-if res.burger_output is not None:
-    # handle response
+    # Handle response
+    print(res)
 ```
-<!-- End SDK Example Usage -->
+
+</br>
+
+The same SDK client can also be used to make asychronous requests by importing asyncio.
+```python
+# Asynchronous Example
+import asyncio
+from openapi import SDK
+
+async def main():
+    async with SDK(
+        api_key="<YOUR_API_KEY_HERE>",
+    ) as sdk:
+
+        res = await sdk.burger.create_burger_async(name="Cheeseburger", description="A classic cheeseburger")
+
+        # Handle response
+        print(res)
+
+asyncio.run(main())
+```
+<!-- End SDK Example Usage [usage] -->

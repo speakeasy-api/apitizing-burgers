@@ -1,4 +1,5 @@
-# burger
+# Burger
+(*burger*)
 
 ## Overview
 
@@ -6,6 +7,7 @@ Operations related to burgers
 
 Burger external docs
 <https://en.wikipedia.org/wiki/Hamburger>
+
 ### Available Operations
 
 * [create_burger](#create_burger) - Create Burger
@@ -21,34 +23,37 @@ Create a burger
 ### Example Usage
 
 ```python
-import sdk
-from sdk.models import shared
+from openapi import SDK
 
-s = sdk.SDK()
+with SDK(
+    api_key="<YOUR_API_KEY_HERE>",
+) as sdk:
 
-req = shared.BurgerCreate(
-    description='Veggie burger with avocado',
-    name='Veggie Burger',
-)
+    res = sdk.burger.create_burger(name="Cheeseburger", description="A classic cheeseburger")
 
-res = s.burger.create_burger(req)
+    # Handle response
+    print(res)
 
-if res.burger_output is not None:
-    # handle response
 ```
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `request`                                                           | [shared.BurgerCreate](../../models/shared/burgercreate.md)          | :heavy_check_mark:                                                  | The request object to use for the request.                          |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
-
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | The name of the burger                                              | Cheeseburger                                                        |
+| `description`                                                       | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | The description of the burger                                       | A classic cheeseburger                                              |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
 ### Response
 
-**[operations.CreateBurgerResponse](../../models/operations/createburgerresponse.md)**
+**[models.BurgerOutput](../../models/burgeroutput.md)**
 
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models.HTTPValidationError | 422                        | application/json           |
+| models.APIError            | 4XX, 5XX                   | \*/\*                      |
 
 ## delete_burger
 
@@ -57,33 +62,37 @@ Delete a burger
 ### Example Usage
 
 ```python
-import sdk
-from sdk.models import operations
+from openapi import SDK
 
-s = sdk.SDK()
+with SDK(
+    api_key="<YOUR_API_KEY_HERE>",
+) as sdk:
 
-req = operations.DeleteBurgerRequest(
-    burger_id=602763,
-)
+    res = sdk.burger.delete_burger(burger_id=199926)
 
-res = s.burger.delete_burger(req)
+    # Handle response
+    print(res)
 
-if res.response_message is not None:
-    # handle response
 ```
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `request`                                                                        | [operations.DeleteBurgerRequest](../../models/operations/deleteburgerrequest.md) | :heavy_check_mark:                                                               | The request object to use for the request.                                       |
-| `retries`                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                 | :heavy_minus_sign:                                                               | Configuration to override the default retry behavior of the client.              |
-
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `burger_id`                                                         | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
-**[operations.DeleteBurgerResponse](../../models/operations/deleteburgerresponse.md)**
+**[models.ResponseMessage](../../models/responsemessage.md)**
 
+### Errors
+
+| Error Type                  | Status Code                 | Content Type                |
+| --------------------------- | --------------------------- | --------------------------- |
+| models.ResponseMessageError | 404                         | application/json            |
+| models.HTTPValidationError  | 422                         | application/json            |
+| models.APIError             | 4XX, 5XX                    | \*/\*                       |
 
 ## list_burgers
 
@@ -92,16 +101,17 @@ List all burgers
 ### Example Usage
 
 ```python
-import sdk
+from openapi import SDK
 
+with SDK(
+    api_key="<YOUR_API_KEY_HERE>",
+) as sdk:
 
-s = sdk.SDK()
+    res = sdk.burger.list_burgers()
 
+    # Handle response
+    print(res)
 
-res = s.burger.list_burgers()
-
-if res.burger_outputs is not None:
-    # handle response
 ```
 
 ### Parameters
@@ -110,11 +120,15 @@ if res.burger_outputs is not None:
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
-**[operations.ListBurgersResponse](../../models/operations/listburgersresponse.md)**
+**[List[models.BurgerOutput]](../../models/.md)**
 
+### Errors
+
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| models.APIError | 4XX, 5XX        | \*/\*           |
 
 ## read_burger
 
@@ -123,33 +137,37 @@ Read a burger
 ### Example Usage
 
 ```python
-import sdk
-from sdk.models import operations
+from openapi import SDK
 
-s = sdk.SDK()
+with SDK(
+    api_key="<YOUR_API_KEY_HERE>",
+) as sdk:
 
-req = operations.ReadBurgerRequest(
-    burger_id=857946,
-)
+    res = sdk.burger.read_burger(burger_id=102880)
 
-res = s.burger.read_burger(req)
+    # Handle response
+    print(res)
 
-if res.burger_output is not None:
-    # handle response
 ```
 
 ### Parameters
 
-| Parameter                                                                    | Type                                                                         | Required                                                                     | Description                                                                  |
-| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `request`                                                                    | [operations.ReadBurgerRequest](../../models/operations/readburgerrequest.md) | :heavy_check_mark:                                                           | The request object to use for the request.                                   |
-| `retries`                                                                    | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)             | :heavy_minus_sign:                                                           | Configuration to override the default retry behavior of the client.          |
-
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `burger_id`                                                         | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
-**[operations.ReadBurgerResponse](../../models/operations/readburgerresponse.md)**
+**[models.BurgerOutput](../../models/burgeroutput.md)**
 
+### Errors
+
+| Error Type                  | Status Code                 | Content Type                |
+| --------------------------- | --------------------------- | --------------------------- |
+| models.ResponseMessageError | 404                         | application/json            |
+| models.HTTPValidationError  | 422                         | application/json            |
+| models.APIError             | 4XX, 5XX                    | \*/\*                       |
 
 ## update_burger
 
@@ -158,34 +176,36 @@ Update a burger
 ### Example Usage
 
 ```python
-import sdk
-from sdk.models import operations, shared
+from openapi import SDK
 
-s = sdk.SDK()
+with SDK(
+    api_key="<YOUR_API_KEY_HERE>",
+) as sdk:
 
-req = operations.UpdateBurgerRequest(
-    burger_update=shared.BurgerUpdate(
-        description='Veggie burger with avocado',
-        name='null',
-    ),
-    burger_id=423655,
-)
+    res = sdk.burger.update_burger(burger_id=174868, description="Veggie burger with avocado", name="Veggie Burger")
 
-res = s.burger.update_burger(req)
+    # Handle response
+    print(res)
 
-if res.burger_output is not None:
-    # handle response
 ```
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `request`                                                                        | [operations.UpdateBurgerRequest](../../models/operations/updateburgerrequest.md) | :heavy_check_mark:                                                               | The request object to use for the request.                                       |
-| `retries`                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                 | :heavy_minus_sign:                                                               | Configuration to override the default retry behavior of the client.              |
-
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `burger_id`                                                         | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |                                                                     |
+| `description`                                                       | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | The description of the burger                                       | A classic cheeseburger                                              |
+| `name`                                                              | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | The name of the burger                                              | Cheeseburger                                                        |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
 ### Response
 
-**[operations.UpdateBurgerResponse](../../models/operations/updateburgerresponse.md)**
+**[models.BurgerOutput](../../models/burgeroutput.md)**
 
+### Errors
+
+| Error Type                  | Status Code                 | Content Type                |
+| --------------------------- | --------------------------- | --------------------------- |
+| models.ResponseMessageError | 404                         | application/json            |
+| models.HTTPValidationError  | 422                         | application/json            |
+| models.APIError             | 4XX, 5XX                    | \*/\*                       |
