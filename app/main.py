@@ -9,14 +9,21 @@ from datetime import datetime
 from enum import Enum
 from typing import List, Annotated
 
-from fastapi import FastAPI, Path, status
+from fastapi import Depends, FastAPI, HTTPException, Path, status
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 from fastapi.routing import APIRoute
+from fastapi.security import APIKeyHeader
 
 from pydantic import BaseModel, Field, conlist
 
+API_KEY = "your-apitizing-api-key"
 
+header_scheme = APIKeyHeader(name=API_KEY, 
+                             auto_error=True,
+                             description="API Key for the Burger listing API. API Key should be sent as a header, witht the value 'your-apitizing-api-key'",
+                             scheme_name="api_key",
+                             )
 class BurgerCreate(BaseModel):
     """Fields to create a burger"""
 
@@ -281,8 +288,11 @@ def create_burger(burger: BurgerCreate):
         }
     },
 )
-def list_burgers():
+def list_burgers(key: str = Depends(header_scheme)):
     """List all burgers"""
+    
+    if key != API_KEY:
+        raise HTTPException(status_code=401, detail="Invalid API Key")
 
     return [BurgerOutput(**burger_data.dict()) for burger_data in burgers_db]
 
