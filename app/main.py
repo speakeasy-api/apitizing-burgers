@@ -4,7 +4,6 @@ This example API demonstrates Speakeasy's recommended practices for generating c
 OpenAPI specifications.
 """
 
-
 from datetime import datetime
 from enum import Enum
 from typing import List, Annotated
@@ -19,11 +18,14 @@ from pydantic import BaseModel, Field, conlist
 
 API_KEY = "your-apitizing-api-key"
 
-header_scheme = APIKeyHeader(name=API_KEY, 
-                             auto_error=True,
-                             description="API Key for the Burger listing API. API Key should be sent as a header, witht the value 'your-apitizing-api-key'",
-                             scheme_name="api_key",
-                             )
+header_scheme = APIKeyHeader(
+    name=API_KEY,
+    auto_error=True,
+    description="API Key for the Burger listing API. API Key should be sent as a header, witht the value 'your-apitizing-api-key'",
+    scheme_name="api_key",
+)
+
+
 class BurgerCreate(BaseModel):
     """Fields to create a burger"""
 
@@ -290,7 +292,7 @@ def create_burger(burger: BurgerCreate):
 )
 def list_burgers(key: str = Depends(header_scheme)):
     """List all burgers"""
-    
+
     if key != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid API Key")
 
