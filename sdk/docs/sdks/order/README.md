@@ -1,4 +1,5 @@
-# order
+# Order
+(*order*)
 
 ## Overview
 
@@ -18,39 +19,41 @@ Create an order
 ### Example Usage
 
 ```python
-import sdk
-from sdk.models import shared
+from openapi import SDK
 
-s = sdk.SDK()
+with SDK(
+    api_key="<YOUR_API_KEY_HERE>",
+) as sdk:
 
-req = shared.OrderCreate(
-    burger_ids=[
-        645894,
-        384382,
-        437587,
-    ],
-    note='No onions',
-    table=3,
-)
+    res = sdk.order.create_order(burger_ids=[
+        1,
+        3,
+    ], table=2, note="No onions")
 
-res = s.order.create_order(req)
+    # Handle response
+    print(res)
 
-if res.order_output is not None:
-    # handle response
 ```
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `request`                                                           | [shared.OrderCreate](../../models/shared/ordercreate.md)            | :heavy_check_mark:                                                  | The request object to use for the request.                          |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
-
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `burger_ids`                                                        | List[*int*]                                                         | :heavy_check_mark:                                                  | List of burger ids in the order                                     | [<br/>1,<br/>2<br/>]                                                |
+| `table`                                                             | *int*                                                               | :heavy_check_mark:                                                  | Table number for the order                                          | 1                                                                   |
+| `note`                                                              | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | Note for the order                                                  | No onions                                                           |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
 ### Response
 
-**[operations.CreateOrderResponse](../../models/operations/createorderresponse.md)**
+**[models.OrderOutput](../../models/orderoutput.md)**
 
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models.HTTPValidationError | 422                        | application/json           |
+| models.APIError            | 4XX, 5XX                   | \*/\*                      |
 
 ## list_orders
 
@@ -59,16 +62,17 @@ List all orders
 ### Example Usage
 
 ```python
-import sdk
+from openapi import SDK
 
+with SDK(
+    api_key="<YOUR_API_KEY_HERE>",
+) as sdk:
 
-s = sdk.SDK()
+    res = sdk.order.list_orders()
 
+    # Handle response
+    print(res)
 
-res = s.order.list_orders()
-
-if res.order_outputs is not None:
-    # handle response
 ```
 
 ### Parameters
@@ -77,11 +81,15 @@ if res.order_outputs is not None:
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
-**[operations.ListOrdersResponse](../../models/operations/listordersresponse.md)**
+**[List[models.OrderOutput]](../../models/.md)**
 
+### Errors
+
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| models.APIError | 4XX, 5XX        | \*/\*           |
 
 ## read_order
 
@@ -90,33 +98,37 @@ Read an order
 ### Example Usage
 
 ```python
-import sdk
-from sdk.models import operations
+from openapi import SDK
 
-s = sdk.SDK()
+with SDK(
+    api_key="<YOUR_API_KEY_HERE>",
+) as sdk:
 
-req = operations.ReadOrderRequest(
-    order_id=56713,
-)
+    res = sdk.order.read_order(order_id=816257)
 
-res = s.order.read_order(req)
+    # Handle response
+    print(res)
 
-if res.order_output is not None:
-    # handle response
 ```
 
 ### Parameters
 
-| Parameter                                                                  | Type                                                                       | Required                                                                   | Description                                                                |
-| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| `request`                                                                  | [operations.ReadOrderRequest](../../models/operations/readorderrequest.md) | :heavy_check_mark:                                                         | The request object to use for the request.                                 |
-| `retries`                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)           | :heavy_minus_sign:                                                         | Configuration to override the default retry behavior of the client.        |
-
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `order_id`                                                          | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
-**[operations.ReadOrderResponse](../../models/operations/readorderresponse.md)**
+**[models.OrderOutput](../../models/orderoutput.md)**
 
+### Errors
+
+| Error Type                  | Status Code                 | Content Type                |
+| --------------------------- | --------------------------- | --------------------------- |
+| models.ResponseMessageError | 404                         | application/json            |
+| models.HTTPValidationError  | 422                         | application/json            |
+| models.APIError             | 4XX, 5XX                    | \*/\*                       |
 
 ## update_order
 
@@ -125,41 +137,41 @@ Update an order
 ### Example Usage
 
 ```python
-import sdk
-from sdk.models import operations, shared
+from openapi import SDK
 
-s = sdk.SDK()
+with SDK(
+    api_key="<YOUR_API_KEY_HERE>",
+) as sdk:
 
-req = operations.UpdateOrderRequest(
-    order_update=shared.OrderUpdate(
-        burger_ids=[
-            272656,
-            383441,
-            477665,
-            791725,
-        ],
-        note='Extra ketchup',
-        status=shared.OrderUpdateOrderStatus.READY,
-        table=2,
-    ),
-    order_id=568045,
-)
+    res = sdk.order.update_order(order_id=983384, burger_ids=[
+        1,
+        3,
+    ], note="No onions", table=2)
 
-res = s.order.update_order(req)
+    # Handle response
+    print(res)
 
-if res.order_output is not None:
-    # handle response
 ```
 
 ### Parameters
 
-| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `request`                                                                      | [operations.UpdateOrderRequest](../../models/operations/updateorderrequest.md) | :heavy_check_mark:                                                             | The request object to use for the request.                                     |
-| `retries`                                                                      | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)               | :heavy_minus_sign:                                                             | Configuration to override the default retry behavior of the client.            |
-
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `order_id`                                                          | *int*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |                                                                     |
+| `burger_ids`                                                        | List[*int*]                                                         | :heavy_minus_sign:                                                  | List of burger ids in the order                                     | [<br/>1,<br/>2<br/>]                                                |
+| `note`                                                              | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | Note for the order                                                  | No onions                                                           |
+| `status`                                                            | [Optional[models.OrderStatus]](../../models/orderstatus.md)         | :heavy_minus_sign:                                                  | Status of the order                                                 |                                                                     |
+| `table`                                                             | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Table number for the order                                          | 1                                                                   |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
 ### Response
 
-**[operations.UpdateOrderResponse](../../models/operations/updateorderresponse.md)**
+**[models.OrderOutput](../../models/orderoutput.md)**
 
+### Errors
+
+| Error Type                  | Status Code                 | Content Type                |
+| --------------------------- | --------------------------- | --------------------------- |
+| models.ResponseMessageError | 404                         | application/json            |
+| models.HTTPValidationError  | 422                         | application/json            |
+| models.APIError             | 4XX, 5XX                    | \*/\*                       |

@@ -168,8 +168,7 @@ components:
           title: Note
           type: string
         status:
-          allOf:
-          - $ref: '#/components/schemas/OrderStatus'
+          $ref: '#/components/schemas/OrderStatus'
           examples:
           - CREATED
           - PREPARING
@@ -235,8 +234,7 @@ components:
           title: Note
           type: string
         status:
-          allOf:
-          - $ref: '#/components/schemas/OrderStatus'
+          $ref: '#/components/schemas/OrderStatus'
           description: Status of the order
           examples:
           - CREATED
@@ -287,6 +285,13 @@ components:
       - type
       title: ValidationError
       type: object
+  securitySchemes:
+    api_key:
+      description: API Key for the Burger listing API. API Key should be sent as a
+        header, witht the value 'your-apitizing-api-key'
+      in: header
+      name: your-apitizing-api-key
+      type: apiKey
 info:
   description: This API is used to manage burgers and orders in a restaurant
   summary: A simple API to manage burgers and orders
@@ -308,6 +313,8 @@ paths:
                 title: Response Listburgers
                 type: array
           description: Successful Response
+      security:
+      - api_key: []
       summary: List Burgers
       tags:
       - burger
@@ -564,7 +571,7 @@ paths:
       - order
 servers:
 - description: Local server
-  url: http://127.0.0.1:8000/
+  url: http://127.0.0.1:8000
 tags:
 - description: Operations related to burgers
   externalDocs:
