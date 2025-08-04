@@ -1,13 +1,15 @@
-<p align="center">
-  <a href="https://speakeasyapi.dev">
-    <img alt="Speakeasy" title="Speakeasy" src="https://user-images.githubusercontent.com/68016351/196461357-fcb8d90f-cd67-498e-850f-6146c58d0114.png" width="400" style="color: black">
-  </a>
-</p>
+<div align="center">
+ <a href="https://www.speakeasy.com/" target="_blank">
+  <img width="1500" height="500" alt="Speakeasy" src="https://github.com/user-attachments/assets/0e56055b-02a3-4476-9130-4be299e5a39c" />
+ </a>
+ <br />
+ <br />
+  <div>
+   <a href="https://speakeasy.com/docs/create-client-sdks/" target="_blank"><b>Docs Quickstart</b></a>&nbsp;&nbsp;//&nbsp;&nbsp;<a href="https://go.speakeasy.com/slack" target="_blank"><b>Join us on Slack</b></a>
+  </div>
+ <br />
 
-<p align="center">
-  <i>Speakeasy is the fastest way to ship developer experience for your APIs.</i><br/>
-  <a href="https://speakeasyapi.dev/">speakeasyapi.dev</a>
-</p>
+</div>
 
 <p align="center">
 <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi">
